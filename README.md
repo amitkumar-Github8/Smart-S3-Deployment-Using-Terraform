@@ -1,12 +1,15 @@
-# Smart S3 Deploy - Static Website Hosting
+# Smart S3 Deploy - Static Website Hosting 🚀
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Terraform](https://img.shields.io/badge/Terraform-v1.2.0+-blue.svg)](https://www.terraform.io/downloads.html)
+[![AWS](https://img.shields.io/badge/AWS-CloudFront-orange.svg)](https://aws.amazon.com/cloudfront/)
+[![S3](https://img.shields.io/badge/AWS-S3-blue.svg)](https://aws.amazon.com/s3/)
 
 A Terraform-based solution for deploying static websites to AWS S3 with CloudFront distribution. This project provides a secure, scalable, and cost-effective way to host static websites on AWS.
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-
 ## 🌟 Features
 
-- **S3 Bucket Configuration**
+- **S3 Bucket Configuration** 🔒
   - Secure bucket with public access blocked
   - Server-side encryption enabled
   - Versioning enabled for backup and rollback
@@ -14,14 +17,14 @@ A Terraform-based solution for deploying static websites to AWS S3 with CloudFro
   - CORS configuration for web assets
   - Website hosting configuration
 
-- **CloudFront Distribution**
+- **CloudFront Distribution** 🌐
   - Global content delivery network
   - HTTPS support
   - Optimized caching for different file types
   - Custom error responses
   - Origin Access Identity for secure S3 access
 
-- **Infrastructure as Code**
+- **Infrastructure as Code** ⚡
   - Modular Terraform configuration
   - Easy to customize and extend
   - Follows AWS best practices
@@ -31,17 +34,17 @@ A Terraform-based solution for deploying static websites to AWS S3 with CloudFro
 
 Before you begin, ensure you have the following installed:
 
-- [Terraform](https://www.terraform.io/downloads.html) (v1.2.0 or later)
-- [AWS CLI](https://aws.amazon.com/cli/) configured with appropriate credentials
-- An AWS account with permissions to create S3 buckets and CloudFront distributions
+- [Terraform](https://www.terraform.io/downloads.html) (v1.2.0 or later) 🔧
+- [AWS CLI](https://aws.amazon.com/cli/) configured with appropriate credentials 🔑
+- An AWS account with permissions to create S3 buckets and CloudFront distributions 🏢
 
 ## 🚀 Quick Start
 
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/yourusername/smart-s3-deploy.git
-cd smart-s3-deploy
+git clone https://github.com/amitkumar-Github8/Smart-S3-Deployment.git
+cd Smart-S3-Deployment
 ```
 
 ### 2. Configure AWS Credentials
@@ -198,8 +201,6 @@ To remove all resources created by this project:
 
 ```bash
 # Empty the S3 bucket first
-S3_BUCKET=$(terraform output -raw s3_bucket_name)
-aws s3 rm s3://$S3_BUCKET --recursive
 
 # Then destroy the Terraform resources
 terraform destroy
@@ -233,4 +234,4 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## 📞 Support
 
-If you encounter any issues or have questions, please [open an issue](https://github.com/yourusername/smart-s3-deploy/issues) in the GitHub repository. 
+If you encounter any issues or have questions, please [open an issue](https://github.com/amitkumar-Github8/Smart-S3-Deployment.git) in the GitHub repository. 
