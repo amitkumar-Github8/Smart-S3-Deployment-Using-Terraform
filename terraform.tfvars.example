@@ -1,0 +1,14 @@
+# AWS Region
+aws_region = "us-east-1"
+
+# Environment
+environment = "production"
+
+# Tags
+tags = {
+  Terraform  = "true"
+  ManagedBy  = "terraform"
+  Project    = "smart-s3-deploy"
+  Owner      = "Your-Name"
+  CostCenter = "your-cost-center"
+} 

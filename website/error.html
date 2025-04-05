@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page Not Found</title>
+    <style>
+        :root {
+            --primary-color: #4a6bff;
+            --secondary-color: #ff6b6b;
+            --accent-color: #6bff9e;
+            --dark-color: #2c3e50;
+            --light-color: #f8f9fa;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            color: var(--dark-color);
+            background-color: var(--light-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            transition: background-color 0.3s ease;
+        }
+        
+        .container {
+            text-align: center;
+            background: #ffffff;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            max-width: 600px;
+            transition: all 0.3s ease;
+            animation: fadeIn 0.5s ease forwards;
+        }
+        
+        .container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+        
+        h1 {
+            color: var(--secondary-color);
+            margin-bottom: 20px;
+            font-size: 2.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        p {
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+        }
+        
+        a {
+            display: inline-block;
+            background: var(--primary-color);
+            color: #ffffff;
+            padding: 12px 25px;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(255,255,255,0.2), rgba(255,255,255,0));
+            z-index: 1;
+        }
+        
+        a:hover {
+            background: var(--secondary-color);
+            transform: scale(1.05);
+        }
+        
+        .theme-switcher {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            z-index: 100;
+        }
+        
+        .theme-switcher:hover {
+            transform: rotate(180deg);
+            background: var(--secondary-color);
+        }
+        
+        .error-animation {
+            margin: 20px 0;
+            font-size: 5rem;
+            color: var(--secondary-color);
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-30px);
+            }
+            60% {
+                transform: translateY(-15px);
+            }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .color-box {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            margin: 0 5px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        
+        .color-box:hover {
+            transform: scale(1.2);
+        }
+        
+        .color-picker {
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="error-animation">404</div>
+        <h1>Page Not Found</h1>
+        <p>The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.</p>
+        <a href="/">Go to Homepage</a>
+        
+        <div class="color-picker">
+            <p>Change the website theme:</p>
+            <div class="color-box" style="background-color: #4a6bff;" onclick="changeTheme('#4a6bff', '#ff6b6b', '#6bff9e')"></div>
+            <div class="color-box" style="background-color: #ff6b6b;" onclick="changeTheme('#ff6b6b', '#6bff9e', '#4a6bff')"></div>
+            <div class="color-box" style="background-color: #6bff9e;" onclick="changeTheme('#6bff9e', '#4a6bff', '#ff6b6b')"></div>
+        </div>
+    </div>
+    
+    <button class="theme-switcher" onclick="toggleDarkMode()">🌓</button>
+    
+    <script>
+        // Function to change the website theme colors
+        function changeTheme(primary, secondary, accent) {
+            document.documentElement.style.setProperty('--primary-color', primary);
+            document.documentElement.style.setProperty('--secondary-color', secondary);
+            document.documentElement.style.setProperty('--accent-color', accent);
+            
+            // Update the 404 animation color
+            document.querySelector('.error-animation').style.color = secondary;
+            
+            // Update the link color
+            document.querySelector('a').style.backgroundColor = primary;
+        }
+        
+        // Function to toggle dark mode
+        function toggleDarkMode() {
+            const body = document.body;
+            const container = document.querySelector('.container');
+            
+            if (body.style.backgroundColor === 'rgb(44, 62, 80)') {
+                // Switch to light mode
+                body.style.backgroundColor = 'var(--light-color)';
+                body.style.color = 'var(--dark-color)';
+                container.style.backgroundColor = '#ffffff';
+            } else {
+                // Switch to dark mode
+                body.style.backgroundColor = 'rgb(44, 62, 80)';
+                body.style.color = '#f8f9fa';
+                container.style.backgroundColor = 'rgb(52, 73, 94)';
+            }
+        }
+    </script>
+</body>
+</html> 

@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Terraform-Deployed Website</title>
+    <style>
+        :root {
+            --primary-color: #4a6bff;
+            --secondary-color: #ff6b6b;
+            --accent-color: #6bff9e;
+            --dark-color: #2c3e50;
+            --light-color: #f8f9fa;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            color: var(--dark-color);
+            background-color: var(--light-color);
+            transition: background-color 0.3s ease;
+        }
+        
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            padding: 20px;
+            max-width: 1200px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: #ffffff;
+            padding: 20px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="rgba(255,255,255,0.1)"/></svg>');
+            opacity: 0.3;
+            z-index: 0;
+        }
+        
+        header .container {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .content {
+            background: #ffffff;
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .content:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+        
+        h1 {
+            margin-top: 0;
+            font-size: 2.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .highlight {
+            color: var(--accent-color);
+            font-weight: bold;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .highlight::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 3px;
+            bottom: -2px;
+            left: 0;
+            background-color: var(--accent-color);
+            transform: scaleX(0);
+            transform-origin: bottom right;
+            transition: transform 0.3s ease;
+        }
+        
+        .highlight:hover::after {
+            transform: scaleX(1);
+            transform-origin: bottom left;
+        }
+        
+        .features {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+        
+        .feature {
+            flex-basis: 30%;
+            background: #f9f9f9;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .feature::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background-color: var(--primary-color);
+            transition: width 0.3s ease;
+        }
+        
+        .feature:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+        
+        .feature:hover::before {
+            width: 10px;
+        }
+        
+        .feature:nth-child(2)::before {
+            background-color: var(--secondary-color);
+        }
+        
+        .feature:nth-child(3)::before {
+            background-color: var(--accent-color);
+        }
+        
+        .feature h3 {
+            margin-top: 0;
+            color: var(--dark-color);
+        }
+        
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: linear-gradient(135deg, var(--dark-color), var(--primary-color));
+            color: #ffffff;
+            margin-top: 20px;
+        }
+        
+        .theme-switcher {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            z-index: 100;
+        }
+        
+        .theme-switcher:hover {
+            transform: rotate(180deg);
+            background: var(--secondary-color);
+        }
+        
+        .interactive-demo {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f0f0f0;
+            border-radius: 10px;
+            text-align: center;
+        }
+        
+        .demo-button {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 10px;
+        }
+        
+        .demo-button:hover {
+            background: var(--secondary-color);
+            transform: scale(1.05);
+        }
+        
+        .demo-result {
+            margin-top: 20px;
+            padding: 15px;
+            background: white;
+            border-radius: 5px;
+            min-height: 50px;
+            display: none;
+        }
+        
+        .color-box {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            margin: 0 5px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        
+        .color-box:hover {
+            transform: scale(1.2);
+        }
+        
+        .color-picker {
+            margin: 20px 0;
+        }
+        
+        @media (max-width: 768px) {
+            .feature {
+                flex-basis: 100%;
+            }
+        }
+        
+        /* Animation for page load */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .content, .feature {
+            animation: fadeIn 0.5s ease forwards;
+        }
+        
+        .feature:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+        
+        .feature:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Welcome to My <span class="highlight">Terraform-Deployed</span> Website</h1>
+            <p>Built with AWS S3 and CloudFront</p>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="content">
+            <h2>About This Website</h2>
+            <p>This website is deployed using Terraform to AWS S3 and served through CloudFront. It demonstrates the power of Infrastructure as Code (IaC) for deploying and managing cloud resources.</p>
+            
+            <h2>Key Features</h2>
+            <div class="features">
+                <div class="feature">
+                    <h3>AWS S3</h3>
+                    <p>Secure and scalable object storage for hosting static website files.</p>
+                </div>
+                <div class="feature">
+                    <h3>CloudFront</h3>
+                    <p>Global content delivery network for fast and secure content delivery.</p>
+                </div>
+                <div class="feature">
+                    <h3>Terraform</h3>
+                    <p>Infrastructure as Code tool for building, changing, and versioning infrastructure safely and efficiently.</p>
+                </div>
+            </div>
+            
+            <div class="interactive-demo">
+                <h2>Interactive Demo</h2>
+                <p>Try out some interactive features below:</p>
+                
+                <div class="color-picker">
+                    <p>Change the website theme:</p>
+                    <div class="color-box" style="background-color: #4a6bff;" onclick="changeTheme('#4a6bff', '#ff6b6b', '#6bff9e')"></div>
+                    <div class="color-box" style="background-color: #ff6b6b;" onclick="changeTheme('#ff6b6b', '#6bff9e', '#4a6bff')"></div>
+                    <div class="color-box" style="background-color: #6bff9e;" onclick="changeTheme('#6bff9e', '#4a6bff', '#ff6b6b')"></div>
+                </div>
+                
+                <button class="demo-button" onclick="showMessage()">Show Message</button>
+                <button class="demo-button" onclick="toggleAnimation()">Toggle Animation</button>
+                
+                <div id="demo-result" class="demo-result"></div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2023 My Terraform Website. All rights reserved.</p>
+        </div>
+    </footer>
+    
+    <button class="theme-switcher" onclick="toggleDarkMode()">🌓</button>
+    
+    <script>
+        // Function to change the website theme colors
+        function changeTheme(primary, secondary, accent) {
+            document.documentElement.style.setProperty('--primary-color', primary);
+            document.documentElement.style.setProperty('--secondary-color', secondary);
+            document.documentElement.style.setProperty('--accent-color', accent);
+            
+            // Show a message
+            const result = document.getElementById('demo-result');
+            result.style.display = 'block';
+            result.innerHTML = `Theme changed to: ${primary}`;
+            result.style.backgroundColor = primary;
+            result.style.color = 'white';
+            
+            // Hide the message after 3 seconds
+            setTimeout(() => {
+                result.style.display = 'none';
+            }, 3000);
+        }
+        
+        // Function to show a random message
+        function showMessage() {
+            const messages = [
+                "Terraform is awesome!",
+                "AWS S3 is reliable and scalable!",
+                "CloudFront delivers content globally!",
+                "Infrastructure as Code is the future!",
+                "This website is interactive and colorful!"
+            ];
+            
+            const randomMessage = messages[Math.floor(Math.random() * messages.length)];
+            const result = document.getElementById('demo-result');
+            result.style.display = 'block';
+            result.innerHTML = randomMessage;
+            result.style.backgroundColor = 'var(--primary-color)';
+            result.style.color = 'white';
+            
+            // Hide the message after 3 seconds
+            setTimeout(() => {
+                result.style.display = 'none';
+            }, 3000);
+        }
+        
+        // Function to toggle dark mode
+        function toggleDarkMode() {
+            const body = document.body;
+            const content = document.querySelector('.content');
+            const features = document.querySelectorAll('.feature');
+            
+            if (body.style.backgroundColor === 'rgb(44, 62, 80)') {
+                // Switch to light mode
+                body.style.backgroundColor = 'var(--light-color)';
+                body.style.color = 'var(--dark-color)';
+                content.style.backgroundColor = '#ffffff';
+                features.forEach(feature => {
+                    feature.style.backgroundColor = '#f9f9f9';
+                });
+            } else {
+                // Switch to dark mode
+                body.style.backgroundColor = 'rgb(44, 62, 80)';
+                body.style.color = '#f8f9fa';
+                content.style.backgroundColor = 'rgb(52, 73, 94)';
+                features.forEach(feature => {
+                    feature.style.backgroundColor = 'rgb(44, 62, 80)';
+                });
+            }
+        }
+        
+        // Function to toggle animation
+        function toggleAnimation() {
+            const features = document.querySelectorAll('.feature');
+            const result = document.getElementById('demo-result');
+            
+            if (features[0].style.animationPlayState === 'paused') {
+                // Resume animation
+                features.forEach(feature => {
+                    feature.style.animationPlayState = 'running';
+                });
+                result.style.display = 'block';
+                result.innerHTML = 'Animation resumed!';
+            } else {
+                // Pause animation
+                features.forEach(feature => {
+                    feature.style.animationPlayState = 'paused';
+                });
+                result.style.display = 'block';
+                result.innerHTML = 'Animation paused!';
+            }
+            
+            result.style.backgroundColor = 'var(--secondary-color)';
+            result.style.color = 'white';
+            
+            // Hide the message after 3 seconds
+            setTimeout(() => {
+                result.style.display = 'none';
+            }, 3000);
+        }
+    </script>
+</body>
+</html> 
