@@ -218,10 +218,6 @@ terraform destroy
 
 The S3 website endpoint is not accessible by default because public access is blocked. Use the CloudFront URL instead.
 
-## 📝 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
 ## 👥 Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
